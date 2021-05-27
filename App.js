@@ -6,51 +6,54 @@
  * @flow strict-local
  */
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  FlatList,
   Text,
   View,
+  StyleSheet,
 } from 'react-native';
+import CovidData from "./Components/Screens/CovidData";
+import Splash from "./Components/Screens/Splash";
+
 
 
 const App = () => {
 
-  const api = `https://api.covid19india.org/data.json`;
-    const [getdata, setGetdata] = useState([])
-
-    useEffect(async (index) => {
-        const fetchapi = await fetch(api);
-        const response =  await fetchapi.json();
-        setGetdata(response.statewise)
-    },[1])
-
   return (
 
-    <>
-    <Text style={{fontSize:25,color:'black'}}>State,
-   Active,Deaths,
-Confirmed</Text>
-    <FlatList 
-    data={getdata}
-    keyExtractor={({id},index) => id }
-    renderItem={({item}) =>{
-      return (
-        <>
-        <Text key={item}>{item.state},
-        {item.active},
-        {item.deaths},
-        {item.confirmed}</Text>
-        </>
-      )
-    }
-      
-  }
-    />
-    </>
+    // <View style={styles.body}>
+
+    //   <View>
+
+    //     <View style={styles.header}>
+    //       <Text style={styles.heading}>Covid 19 Current Status</Text>
+    //     </View>
+    //     <CovidData />
+    //   </View>
+
+    //   <Text style={styles.heading}>Every Day Featching A New Data</Text>
+    //   <Text style={styles.heading}>Application By Rahul Kirar</Text>
+    // </View>
+    <Splash />
 
   );
 };
+
+const styles = StyleSheet.create({
+
+  header: {
+    width: '100%',
+    paddingTop: 40,
+    paddingBottom: 40,
+  },
+  heading: {
+    fontSize: 30,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'green'
+  },
+
+})
 
 
 export default App;
