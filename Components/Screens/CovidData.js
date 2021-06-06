@@ -4,12 +4,14 @@ import {
     Text,
     View,
     StyleSheet,
-    ActivityIndicator
+    ActivityIndicator,
+    ScrollView,
+    // VirtualizedLists
 } from 'react-native';
 
 
 
-const CovidData = () => {
+export const CovidData = () => {
 
     const api = `https://api.covid19india.org/data.json`;
 
@@ -28,10 +30,10 @@ const CovidData = () => {
 
     const Datarender = ({ item }) => {
         return (
-            <View style={styles.main}>
+            <View style={styles.main} >
 
                 <Text style={styles.title}>
-                    {item.state},
+                    {item.state}
                 </Text>
 
                 <View style={styles.flex}>
@@ -47,7 +49,6 @@ const CovidData = () => {
                     <Text style={styles.text}>
                         {item.confirmed}
                     </Text>
-
                 </View>
 
             </View>
@@ -61,37 +62,41 @@ const CovidData = () => {
             <View>
                 < ActivityIndicator size="large" color="black" />
             </View > :
+            
+            <ScrollView >
 
-            <View style={styles.mainTitle}>
+                <View style={styles.mainTitle}>
 
-                <View style={styles.main}>
-                    <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'black',textAlign: 'center' }}>
-                        State,
+                    <View style={styles.main}>
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: 'black', textAlign: 'center' }}>
+                            State,
                 </Text>
-                    <View style={styles.flex}>
+                        <View style={styles.flex}>
 
-                        <Text style={{ color: 'black', fontSize: 20 }}>
-                            Active,
+                            <Text style={{ color: 'black', fontSize: 20,letterSpacing: 2 }}>
+                                Active,
                      </Text>
 
-                        <Text style={{ color: 'black', fontSize: 20 }}>
-                            Deaths,
+                            <Text style={{ color: 'black', fontSize: 20,letterSpacing: 2 }}>
+                                Deaths,
                       </Text>
 
-                        <Text style={{ color: 'black', fontSize: 20 }}>
-                            Confirmed
+                            <Text style={{ color: 'black', fontSize: 20,letterSpacing: 2 }}>
+                                Confirmed
                     </Text>
 
-                    </View>
+                        </View>
 
+                    </View>
+                    
+                    <FlatList
+                        style={styles.bg}
+                        data={getdata}
+                        keyExtractor={({ id }, index) => index}
+                        renderItem={Datarender}
+                    />
                 </View>
-                <FlatList
-                    style={styles.bg}
-                    data={getdata}
-                    keyExtractor={({ id }, index) => index}
-                    renderItem={Datarender}
-                />
-            </View>
+            </ScrollView>
 
     )
 }
@@ -112,6 +117,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         color: 'white',
         textAlign: 'center',
+        letterSpacing: 2
     },
     flex: {
         display: 'flex',
@@ -122,10 +128,11 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 20,
-        color: 'white'
+        color: 'white',
+        letterSpacing: 2
 
     },
 })
 
-export default CovidData
+ 
 
